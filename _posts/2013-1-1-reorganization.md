@@ -6,10 +6,11 @@ title: Reorganization
 New years day is a great time to reflect.
 
 Things I did in 2012:
-    * Became highly proficient several languages
-    * Traveled to Hawaii
-    * Witnessed an acquisition first-hand
-    * Helped build an amazing product that lots of people use
+
+* Became highly proficient several languages
+* Traveled to Hawaii
+* Witnessed an acquisition first-hand
+* Helped build an amazing product that lots of people use
 
 2012 was a huge year for me. It laid the foundation for my career in NYC and was a huge turning point in my life. At the start of 2011 I wasn't completely convinced that the startup/entrepreneurial/business world would appeal to me. Today I am convinced that it's truly a profession and ecosphere I want to be a part of.
 

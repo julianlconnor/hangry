@@ -11,7 +11,8 @@
 
 // Base
 html, body {
-    font-family: "ff-scala-sans-web-1","ff-scala-sans-web-2","Lucida Grande","Helvetica",sans-serif;
+    font-family: "Domine", "ff-scala-sans-web-1","ff-scala-sans-web-2","Lucida Grande","Helvetica",sans-serif;
+    font-size: 14px;
     color: @textcolor;
 }
 html {
@@ -34,10 +35,23 @@ a, a:visited {
 }
 p {
     font-size: 14px;
+    line-height: 24px;
 }
 h1 {
     margin: 10px 0;
     font-size: 1em;
+}
+
+ul {
+    li {
+        padding: 5px 0;
+    }
+    li:first-child {
+        padding-top: 0;
+    }
+    li:last-child {
+        padding-bottom: 0;
+    }
 }
 
 
@@ -48,7 +62,7 @@ h1 {
 
     margin-bottom: 20px;
 
-    background-color: #fff;
+    background-color: #fdfdfd;
 
     border-left: 1px solid #b8bdbd;
     border-right: 1px solid #b8bdbd;
