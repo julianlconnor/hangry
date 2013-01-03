@@ -1,0 +1,352 @@
+---
+---
+// Colors
+@teal: #71AEAE;
+@jaune: #FFCEA6;
+@4gray: #B8BDBD;
+@3gray: #DBE2E2;
+@2gray: #EFF4F4;
+@1gray: #F1F4F4;
+@textcolor: #444;
+
+// Base
+html, body {
+    font-family: "ff-scala-sans-web-1","ff-scala-sans-web-2","Lucida Grande","Helvetica",sans-serif;
+    color: @textcolor;
+}
+html {
+    background-color: @1gray;
+}
+body {
+    width: 1100px;
+    margin: 0 auto;
+
+    position: relative;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a, a:visited {
+    color: inherit;
+}
+p {
+    font-size: 14px;
+}
+h1 {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+
+// Posts
+.posts-wrapper {
+    width: 700px;
+    height: 100%;
+
+    margin-bottom: 20px;
+
+    background-color: #fff;
+
+    border-left: 1px solid #b8bdbd;
+    border-right: 1px solid #b8bdbd;
+    border-bottom: 1px solid #b8bdbd;
+
+    .post:first-child {
+        padding-top: 10px;
+    }
+    .post:last-child {
+        border-bottom: 0;
+    }
+}
+.post {
+    padding: 20px;
+
+    border: 0;
+    border-bottom: 2px dashed #ccc;
+
+    .highlight {
+        background-color: @3gray;
+        margin: 0 -20px;
+        padding: 15px;
+
+        border-top: 1px solid #B8BDBD;
+        border-bottom: 1px solid #B8BDBD;
+
+        code {
+            font-size: 14px;
+        }
+    }
+    h1.post-title {
+        margin: 0;
+    }
+    .post-title a {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .post-date {
+        font-size: 12px;
+    }
+}
+.post .post-title span::before {
+    content: '~';
+    margin-right: 15px;
+    padding-top: -2px;
+}
+
+// Info About Me
+.info-wrapper {
+
+    position: absolute;
+    right: 88px;
+    top: 0;
+
+    .author-image img, .blog-meta {
+        background-color: @teal;
+        padding: 20px;
+    }
+    .author-image {
+        background-color: @jaune;
+        padding-top: 10px;
+        height: 290px;
+    }
+    .author-image img {
+        height: 250px;
+    }
+    .blog-meta {
+        margin-top: 20px;
+    }
+    .blog-title {
+        font-size: 74px;
+    }
+    .blog-subtitle {
+        font-size: 12px;
+        text-align: right;
+    }
+}
+
+
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+    display: block;
+}
+
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+[hidden] {
+    display: none;
+}
+
+html {
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+
+h1 {
+    font-size: 1em;
+}
+
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+
+b,
+strong {
+    font-weight: bold;
+}
+
+
+dfn {
+    font-style: italic;
+}
+
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+
+small {
+    font-size: 80%;
+}
+
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+
+
+img {
+    border: 0;
+}
+
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+
+
+figure {
+    margin: 0;
+}
+
+
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+legend {
+    border: 0;
+    padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit; 
+    font-size: 100%;
+    margin: 0;
+}
+
+button,
+input {
+    line-height: normal;
+}
+button,
+
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+pre {
+    margin: 0;
+}
+
+// Clearfix
+.group:before,
+.group:after {
+    content:"";
+    display:table;
+}
+.group:after {
+    clear:both;
+}
+.group {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+// Helpers
+.float_left {
+    float: left;
+}
+.float_right {
+    float: right;
+}
