@@ -23,9 +23,9 @@ h1 {
 ul li { padding: 5px 0; }
 ul li:first-child { padding-top: 0; }
 ul li:last-child { padding-bottom: 0; }
+#related { padding: 10px 10px 50px 10px; }
 .posts-wrapper {
   width: 700px;
-  height: 100%;
   margin-bottom: 20px;
   position: absolute;
   left: 330px;
@@ -73,7 +73,7 @@ ul li:last-child { padding-bottom: 0; }
 }
 .info-wrapper .blog-title-wrapper { margin-top: 20px; }
 .info-wrapper .about { margin-top: 20px; }
-.info-wrapper .blog-title { font-size: 74px; }
+.info-wrapper .blog-title { font-size: 62px; }
 .info-wrapper .blog-subtitle {
   font-size: 12px;
   text-align: right;
