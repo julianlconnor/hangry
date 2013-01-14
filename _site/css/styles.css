@@ -59,9 +59,11 @@ ul li:last-child { padding-bottom: 0; }
 .info-wrapper { width: 290px; }
 .info-wrapper .author-image img { background-color: #71aeae; }
 .info-wrapper .blog-title-wrapper { background-color: #71aeae; }
+.info-wrapper .about-contact-wrapper { background-color: #71aeae; }
 .info-wrapper .author-image img { padding: 20px; }
 .info-wrapper .blog-title-wrapper { padding: 20px; }
 .info-wrapper .about { padding: 20px; }
+.info-wrapper .archives-wrapper { padding: 20px; }
 .info-wrapper .author-image {
   background-color: #ffcea6;
   padding-top: 10px;
@@ -73,10 +75,15 @@ ul li:last-child { padding-bottom: 0; }
 }
 .info-wrapper .blog-title-wrapper { margin-top: 20px; }
 .info-wrapper .about { margin-top: 20px; }
+.info-wrapper .archives-wrapper { margin-top: 20px; }
 .info-wrapper .blog-title { font-size: 62px; }
 .info-wrapper .blog-subtitle {
   font-size: 12px;
   text-align: right;
+}
+.info-wrapper ul.archive {
+  padding-left: 20px;
+  list-style-type: none;
 }
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary { display: block; }
 audio, canvas, video { display: inline-block; }
