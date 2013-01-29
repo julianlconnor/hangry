@@ -3,7 +3,7 @@ layout: post
 title: Tornado Async HTTP Gotchas
 ---
 
-At (Venmo)[https://venmo.com] we use (Tornado)[tornadoweb.org] to power our API and async requests. Recently I found myself having to write a proxy using Tornado and ran into some frustrating issues involving small HTTP nuances that other libraries such as (Requests)[http://docs.python-requests.org/] handle for you.
+At [Venmo](https://venmo.com) we use [Tornado](tornadoweb.org) to power our API and async requests. Recently I found myself having to write a proxy using Tornado and ran into some frustrating issues involving small HTTP nuances that other libraries such as [Requests](http://docs.python-requests.org/) handle for you.
 
 ## Gotcha #1
 
