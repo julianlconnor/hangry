@@ -10,23 +10,25 @@ At [Venmo](https://venmo.com) we use [Tornado](tornadoweb.org) to power our API 
 Can you see what's wrong with this snippet?
 
 {% highlight python %}
-return http_client.fetch(self.URL_BASE + url,
-           callback,
-           method=method,
-           headers=headers,
-           body=None)
+return http_client.fetch(url,
+                         callback,
+                         method="GET", # POST, PUT, DELETE, etc..
+                         headers=headers,
+                         body=None)
 {% endhighlight %}
 
-I looked at this for several hours. Turns out that `body` can not be `None`. Tornado expects an empty string instead even though the documentation lists `body` as a keyword argument that defaults to `None`.
+I looked at this for several hours. Turns out that `body` can not be `None` even if it's a `GET` request (requests with no body). Tornado expects an empty string even though the documentation lists `body` as a keyword argument that will default to `None`.
 
 ## Gotcha #2
 
-Tornado does not encode arguments for you. I.e., you need to urlencode arguments and append them to either the query string or body depending on the type of request (`GET`,`POST`,`PUT`,`DELETE`, etc..)
+Tornado does not encode arguments for you. I.e., you need to urlencode arguments and append them to either the query string or body depending on the type of request (`GET`, `POST`, `PUT`, `DELETE`, etc..)
 
 Here's how I handled this situation:
 
 {% highlight python %}
 ## Inside of my request handler.
+import urllib
+
 url = "http://www.someapi.com"
 body = "" # Per the previous gotcha
 encoded_params = urllib.urlencode(params)
@@ -44,6 +46,8 @@ There's still one more issue regarding our previous gotcha. We still need to pro
 
 The above snippet now becomes:
 {% highlight python %}
+import urllib
+
 url = "http://www.someapi.com"
 body = "" # Per the previous gotcha
 headers = ""
