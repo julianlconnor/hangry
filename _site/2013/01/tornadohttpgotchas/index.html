@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Tornado Async HTTP Gotchas</title>
+   <meta name="author" content="Julian Connor" />
+
+   <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+   <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen, projection" />
+    <link href='http://fonts.googleapis.com/css?family=Domine' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+    <div class="info-wrapper">
+        <div class="author-image">
+            <img src="http://i.imgur.com/XUX0v.jpg" />
+        </div>
+        <div class="blog-title-wrapper">
+            <div class="blog-title">lolmuffs</div>
+        </div>
+        <div class="about-contact-wrapper">
+            <div class="about">Thoughts of a programmer and music enthusiast. <a href="http://twitter.com/lolmuffs">@lolmuffs</a></div>
+        </div>
+        <div class="archives-wrapper">
+            <div class="archives">
+              
+
+                
+                <div class="archive-heading 2013">2013</div>
+                <ul class="archive 2013">
+                
+
+                <li><a href="/2013/01/tornadohttpgotchas/">Tornado Async HTTP Gotchas 01.27.13</a></li>
+              
+
+                
+                  
+                  
+                  
+                
+
+                <li><a href="/2013/01/capify-your-jekyll-blog/">Capify Your Jekyll Blog 01.13.13</a></li>
+              
+
+                
+                  
+                  
+                  
+                
+
+                <li><a href="/2013/01/SIC/">Self-Improvement Club 01.06.13</a></li>
+              
+
+                
+                  
+                  
+                  
+                
+
+                <li><a href="/2013/01/reorganization/">Reorganization 01.01.13</a></li>
+              
+            </div>
+        </div>
+    </div>
+    <div class="posts-wrapper">
+        <div class="post">
+    <h1 class="post-title"><a class="post-title-link" href="/2013/01/tornadohttpgotchas/">Tornado Async HTTP Gotchas</a></h1>
+    <div class="post-date">01.27.13</div>
+    <div class="post-content"><p>At (Venmo)[https://venmo.com] we use (Tornado)[tornadoweb.org] to power our API and async requests. Recently I found myself having to write a proxy using Tornado and ran into some frustrating issues involving small HTTP nuances that other libraries such as (Requests)[http://docs.python-requests.org/] handle for you.</p>
+
+<h2>Gotcha #1</h2>
+
+<p>Can you see what's wrong with this snippet?</p>
+
+<div class="highlight"><pre><code class="python"><span class="k">return</span> <span class="n">http_client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URL_BASE</span> <span class="o">+</span> <span class="n">url</span><span class="p">,</span>
+           <span class="n">callback</span><span class="p">,</span>
+           <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+           <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+           <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>I looked at this for several hours. Turns out that <code>body</code> can not be <code>None</code>. Tornado expects an empty string instead even though the documentation lists <code>body</code> as a keyword argument that defaults to <code>None</code>.</p>
+
+<h2>Gotcha #2</h2>
+
+<p>Tornado does not encode arguments for you. I.e., you need to urlencode arguments and append them to either the query string or body depending on the type of request (<code>GET</code>,<code>POST</code>,<code>PUT</code>,<code>DELETE</code>, etc..)</p>
+
+<p>Here's how I handled this situation:</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">## Inside of my request handler.</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.someapi.com&quot;</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">&quot;&quot;</span> <span class="c"># Per the previous gotcha</span>
+<span class="n">encoded_params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
+    <span class="n">url</span> <span class="o">+=</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="n">encoded_params</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">encoded_params</span>
+</code></pre></div>
+
+
+<p>Annoying but not the end of the world.</p>
+
+<h2>Gotcha #3</h2>
+
+<p>There's still one more issue regarding our previous gotcha. We still need to properly set our headers.</p>
+
+<p>The above snippet now becomes:</p>
+
+<div class="highlight"><pre><code class="python"><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.someapi.com&quot;</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">&quot;&quot;</span> <span class="c"># Per the previous gotcha</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">encoded_params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
+    <span class="n">url</span> <span class="o">+=</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="n">params_str</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">params_str</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;Content-Type&#39;</span> <span class="p">:</span> <span class="s">&#39;application/x-www-form-urlencoded&#39;</span> <span class="p">}</span>
+</code></pre></div>
+
+
+<p>And there you go, 3 silly caveats that I spent a fair amount of time debugging. Running into issues like this brings light to the dependence software engineers have on abstractions and how important it is to understand the layers beneath.</p>
+</div>
+    <div class="post-meta"></div>
+</div>
+
+<div id="related">
+  <h2>Related Posts</h2>
+  <ul class="posts">
+    
+      <li><span>13 Jan 2013</span> &raquo; <a href="/2013/01/capify-your-jekyll-blog/">Capify Your Jekyll Blog</a></li>
+    
+      <li><span>06 Jan 2013</span> &raquo; <a href="/2013/01/SIC/">Self-Improvement Club</a></li>
+    
+      <li><span>01 Jan 2013</span> &raquo; <a href="/2013/01/reorganization/">Reorganization</a></li>
+    
+  </ul>
+</div>
+
+    </div>
+</body>
+</html>

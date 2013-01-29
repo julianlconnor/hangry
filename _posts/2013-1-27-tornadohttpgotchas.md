@@ -35,7 +35,7 @@ if method == "GET":
     url += "?" + encoded_params
 else:
     body = encoded_params
-[% endhighlight %}
+{% endhighlight %}
 
 Annoying but not the end of the world.
 
